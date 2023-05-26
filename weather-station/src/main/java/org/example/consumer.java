@@ -5,7 +5,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.*;
 
-import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.time.Duration;
