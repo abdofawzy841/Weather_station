@@ -50,7 +50,7 @@ public class BWriter  implements Closeable {
                         if(writer != null)
                             writer.close();
                         startDay = day;
-                        output = "../../data/station_" + id + "/" + startDay + "-" 
+                        output = "../data/station_" + id + "/" + startDay + "-" 
                             + (status.getStatus_timestamp()%dayTime) + ".parquet";
                         writer = getWriterFor(output);
                     }

@@ -23,7 +23,7 @@ public class App {
     }
     private static void createFolders(){
         for(int i=1; i<=numOfStations; i++){
-            File folder = new File("../../data/station_" + i);
+            File folder = new File("../data/station_" + i);
             System.out.print("Creating folder for station: " + i + " ... ");
             if (!folder.exists()) {
                 if (folder.mkdir())
