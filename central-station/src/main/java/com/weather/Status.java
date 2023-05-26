@@ -1,6 +1,8 @@
 package com.weather;
 
-public class Status {
+import java.io.Serializable;
+
+public class Status implements Serializable {
     private long station_id;
     private long s_no;
     private String battery_status;
@@ -58,40 +60,15 @@ public class Status {
         this.weather = weather;
     }
 
-    public Status station_id(long station_id) {
-        setStation_id(station_id);
-        return this;
-    }
-
-    public Status s_no(long s_no) {
-        setS_no(s_no);
-        return this;
-    }
-
-    public Status battery_status(String battery_status) {
-        setBattery_status(battery_status);
-        return this;
-    }
-
-    public Status status_timestamp(long status_timestamp) {
-        setStatus_timestamp(status_timestamp);
-        return this;
-    }
-
-    public Status weather(Weather weather) {
-        setWeather(weather);
-        return this;
-    }
-
     @Override
     public String toString() {
-        return "{" +
-            " station_id='" + getStation_id() + "'" +
-            ", s_no='" + getS_no() + "'" +
-            ", battery_status='" + getBattery_status() + "'" +
-            ", status_timestamp='" + getStatus_timestamp() + "'" +
-            ", weather='" + getWeather() + "'" +
-            "}";
+        return "Status{" +
+                "station_id=" + station_id +
+                ", s_no=" + s_no +
+                ", battery_status='" + battery_status + '\'' +
+                ", status_timestamp=" + status_timestamp +
+                ", weather=" + weather +
+                '}';
     }
 
 }
