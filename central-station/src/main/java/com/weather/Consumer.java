@@ -8,6 +8,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.AdminClientConfig;
+import org.apache.kafka.clients.admin.DescribeClusterResult;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Consumer {
     KafkaConsumer<String, String> consumer;
     public Consumer(String topic){
-        String bootstrapServers = "localhost:9092";
+        String bootstrapServers = "kafka:9092";
         String groupId = "test-consumer-group";
 
         // create consumer configs
@@ -25,6 +28,23 @@ public class Consumer {
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+
+        AdminClient adminClient = AdminClient.create(properties);
+        while (true) {
+            try {
+                DescribeClusterResult describeClusterResult = adminClient.describeCluster();
+                describeClusterResult.clusterId().get();
+                System.out.println("Connection to Kafka established successfully.");
+                break;
+            } catch (Exception e) {
+                System.out.println("Attempt to connect to Kafka failed. Retrying in 1000 ms.");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
 
         try {
             consumer = new KafkaConsumer<>(properties);

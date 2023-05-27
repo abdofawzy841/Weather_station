@@ -2,8 +2,6 @@ package org.example;
 
 import java.util.Random;
 
-import com.google.gson.Gson;
-
 public class MessageGenerator {
   long stationID;
   long sequenceNumber;

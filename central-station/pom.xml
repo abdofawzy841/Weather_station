@@ -12,6 +12,59 @@
     <maven.compiler.target>11</maven.compiler.target>
     <maven.compiler.source>11</maven.compiler.source>
   </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <argLine>-XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints</argLine>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <executable>java</executable>
+          <arguments>
+            <argument>-XX:+UnlockDiagnosticVMOptions</argument>
+            <argument>-XX:+DebugNonSafepoints</argument>
+            <argument>-XX:StartFlightRecording=settings=default,disk=true,filename=myrecording.jfr</argument>
+            <argument>-classpath</argument>
+            <classpath />
+            <argument>com.weather.App</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <transformers>
+                <transformer
+                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>com.weather.App</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <groupId>org.apache.kafka</groupId>
