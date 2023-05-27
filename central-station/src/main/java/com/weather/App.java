@@ -2,6 +2,8 @@ package com.weather;
 
 import java.io.File;
 
+import com.weather.bitcask.Bitcask;
+
 public class App {
     private static int numOfStations;
     public static void main(String[] args) {
@@ -13,11 +15,11 @@ public class App {
         for(int i=1; i<=numOfStations; i++){
             writers[i] = new BWriter(i);
         }
-
+        Bitcask bitcask = new Bitcask("bitcaskDB", 30);
         while(true){
             for(Status status: statusConsumer.poll()){
                 writers[(int)status.getStation_id()].write(status);
-                // send to riak
+                bitcask.addRecord(status.getStation_id(), status.toString());
             }
         }
     }

@@ -18,7 +18,7 @@ import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 
 
 public class BWriter  implements Closeable {
-    private static final int LIMIT = 10;
+    private static final int LIMIT = 10000;
     private List<Status> buffer;
     private long id;
     private long dayTime = 1000 * 60 * 60 * 24;

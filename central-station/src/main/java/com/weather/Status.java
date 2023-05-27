@@ -62,12 +62,12 @@ public class Status implements Serializable {
 
     @Override
     public String toString() {
-        return "Status{" +
-                "station_id=" + station_id +
-                ", s_no=" + s_no +
-                ", battery_status='" + battery_status + '\'' +
-                ", status_timestamp=" + status_timestamp +
-                ", weather=" + weather +
+        return "{" +
+                "\"station_id\":" + station_id +
+                ", \"s_no\":" + s_no +
+                ", \"battery_status\": \"" + battery_status + "\"" +
+                ", \"status_timestamp\":" + status_timestamp +
+                ", \"weather\":" + weather +
                 '}';
     }
 
