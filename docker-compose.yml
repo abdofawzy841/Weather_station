@@ -1,23 +1,23 @@
 version: '3.5'
 
 services:
-  elastic-stack:
-    build:
-      context: ./elastic_stack
-      dockerfile: Dockerfile    
-    image: elastic-stack
-    container_name: elastic-stack
-    ports:
-      - 5601:5601
-      - 9200:9200
-    environment:
-        - discovery.type=single-node
-    volumes:
-      - elasticsearch-data:/home/elasticsearch/elasticsearch-7.17.9/data
-      - kibana-data:/home/elasticsearch/kibana-7.17.9-linux-x86_64/data
-      - ./data:/home/elasticsearch/parquet_files
-    networks:
-      - weather_network
+  # elastic-stack:
+  #   build:
+  #     context: ./elastic_stack
+  #     dockerfile: Dockerfile    
+  #   image: elastic-stack
+  #   container_name: elastic-stack
+  #   ports:
+  #     - 5601:5601
+  #     - 9200:9200
+  #   environment:
+  #       - discovery.type=single-node
+  #   volumes:
+  #     - elasticsearch-data:/home/elasticsearch/elasticsearch-7.17.9/data
+  #     - kibana-data:/home/elasticsearch/kibana-7.17.9-linux-x86_64/data
+  #     - ./data:/home/elasticsearch/parquet_files
+  #   networks:
+  #     - weather_network
 
   central_station:
     build:
@@ -27,6 +27,7 @@ services:
     container_name: central_station
     volumes:
       - ./data:/data
+      - ./central-station/bitcaskDB:/app/bitcaskDB
     depends_on:
       - kafka
     networks:

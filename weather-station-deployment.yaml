@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: weather-station
+  name: weather-station
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: weather-station
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/weather-station-weather-network: "true"
+        io.kompose.service: weather-station
+    spec:
+      containers:
+        - image: weather_station
+          name: weather-station
+          resources: {}
+      restartPolicy: Always
+status: {}

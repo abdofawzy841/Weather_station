@@ -28,8 +28,6 @@ public class Station extends Thread {
         producer.send(new ProducerRecord<String,String>(topicName, message));
       }
       long timeTaken = System.currentTimeMillis() - startTime;
-      System.out.println("Sending message took " + timeTaken + " ms");
-      System.out.println("Message: " + message);
       try {
         Thread.sleep((1000 - timeTaken) > 0 ? 1000 - timeTaken : 0);
       } catch (InterruptedException e) {
