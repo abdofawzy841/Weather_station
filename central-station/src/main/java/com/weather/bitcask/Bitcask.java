@@ -81,8 +81,10 @@ public class Bitcask{
         createHintFile(compressName, compressedHint);
         compressed.renameTo(new File(directoryName+File.separator+compressName));
         for(Long key: compressedHint.keySet()){
-            if(mergedHints.get(key).equals(copyHints.get(key))){
-                mergedHints.put(key, compressedHint.get(key));
+            synchronized(mergedHints){
+                if(mergedHints.get(key).equals(copyHints.get(key))){
+                    mergedHints.put(key, compressedHint.get(key));
+                }
             }
         }
 
@@ -117,9 +119,11 @@ public class Bitcask{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for(Long key: keyDir.keySet()){
-            keyDir.get(key).fileName = name;
-            mergedHints.put(key, keyDir.get(key));
+        synchronized(mergedHints){
+            for(Long key: keyDir.keySet()){
+                keyDir.get(key).fileName = name;
+                mergedHints.put(key, keyDir.get(key));
+            }
         }
         createHintFile(name, keyDir);
         keyDir.clear();
